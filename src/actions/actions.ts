@@ -1,6 +1,5 @@
 'use server';
 
-import { connectToDB } from '@/lib/db';
 import { Todo } from '@/models/todo';
 import { User } from '@/models/user';
 import { revalidatePath } from 'next/cache';
