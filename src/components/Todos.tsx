@@ -5,7 +5,6 @@ import { changeStatus, deleteTodo } from '@/actions/actions';
 import React, { Key } from 'react';
 
 function Todo({ todo }: { todo: TodoType }) {
-  console.log(todo);
   const style: React.CSSProperties = {
     opacity: todo.isCompleted ? 0.5 : 1,
   };
@@ -28,7 +27,9 @@ function Todo({ todo }: { todo: TodoType }) {
               <input type="hidden" value={todo._id.toString()} name="id" />
               <button
                 type="submit"
-                className="px-4 py-3 border border-purple-600 rounded-xl">
+                className={`px-4 py-3 border ${
+                  todo.isCompleted ? 'border-gray-600' : 'border-purple-600'
+                } rounded-xl`}>
                 Delete
               </button>
             </form>
@@ -38,7 +39,9 @@ function Todo({ todo }: { todo: TodoType }) {
               <input type="hidden" value={todo._id.toString()} name="id" />
               <button
                 type="submit"
-                className="bg-purple-600 px-4 py-3 rounded-xl text-white">
+                className={`
+                ${todo.isCompleted ? 'bg-gray-600' : 'bg-purple-600'}
+                px-4 py-3 rounded-xl text-white`}>
                 Mark as done
               </button>
             </form>
