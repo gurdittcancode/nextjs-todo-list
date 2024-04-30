@@ -7,13 +7,14 @@ import { useRef } from 'react';
 export default function AddTodo() {
   const { data: session } = useSession();
   const ref = useRef<HTMLFormElement>(null);
+  const id = session?.user.id!;
 
   return (
     <form
       className="w-full flex justify-center gap-7"
       ref={ref}
       action={async (formData: FormData) => {
-        formData.append("user", session?.user?.id);
+        formData.append('user', id);
         await addTodo(formData);
         ref.current?.reset();
       }}>

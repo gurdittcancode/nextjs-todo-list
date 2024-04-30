@@ -1,4 +1,4 @@
-import { getServerSession, NextAuthOptions } from 'next-auth';
+import { getServerSession, NextAuthOptions, Session } from 'next-auth';
 import Google from 'next-auth/providers/google';
 import { connectToDB } from './db';
 import { User } from '@/models/user';
@@ -28,10 +28,10 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
     },
-    async session({ session }) {
+    async session({ session }: { session: Session }) {
       const email = session.user?.email;
       await connectToDB();
-      const sessionUser: UserType = await User.findOne({ email });
+      const sessionUser = await User.findOne({ email });
       session.user.id = sessionUser._id;
 
       return session;

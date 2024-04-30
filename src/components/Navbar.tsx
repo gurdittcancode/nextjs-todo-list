@@ -14,7 +14,7 @@ export default function Navbar() {
         {session?.user ? (
           <span className="flex gap-7">
             <Image
-              src={session.user.image}
+              src={session.user.image as string}
               height={40}
               width={40}
               className="rounded-full w-auto"

@@ -4,7 +4,7 @@ import { getAuthSession } from '@/lib/auth';
 import { User } from '@/models/user';
 import { TodoType } from '@/types/todo';
 
-async function getTodos(id) {
+async function getTodos(id: string) {
   try {
     const foundUser = await User.findById(id).populate('todos');
     const todos: TodoType[] = foundUser.todos;
@@ -18,12 +18,13 @@ async function getTodos(id) {
     return todos;
   } catch (err) {
     console.error('Error fetching todos:', err);
+    return [];
   }
 }
 
 export default async function Home() {
   const session = await getAuthSession();
-  const todos: TodoType[] = await getTodos(session?.user.id || '');
+  const todos: TodoType[] = await getTodos(session?.user?.id || '');
 
   if (!session?.user) {
     return (
