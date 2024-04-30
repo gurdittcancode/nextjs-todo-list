@@ -7,7 +7,7 @@ import { revalidatePath } from 'next/cache';
 export async function addTodo(formData: FormData) {
   const title = formData.get('title');
   const userId = formData.get('user');
-  const form: HTMLFormElement = formData.get('form');
+  const form = formData.get('form');
 
   try {
     const newTodo = await Todo.create({ title });

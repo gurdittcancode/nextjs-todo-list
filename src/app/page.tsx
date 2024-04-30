@@ -4,7 +4,7 @@ import { getAuthSession } from '@/lib/auth';
 import { User } from '@/models/user';
 import { TodoType } from '@/types/todo';
 
-async function getTodos(id): TodoType[] {
+async function getTodos(id) {
   try {
     const foundUser = await User.findById(id).populate('todos');
     const todos: TodoType[] = foundUser.todos;
