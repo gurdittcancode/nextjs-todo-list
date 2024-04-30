@@ -5,9 +5,10 @@ import { User } from '@/models/user';
 import { revalidatePath } from 'next/cache';
 
 export async function addTodo(formData: FormData) {
+  console.log(formData);
   const title = formData.get('title');
   const userId = formData.get('user');
-  const form = formData.get('form');
+  const form = formData.get('form') as unknown as HTMLFormElement;
 
   try {
     const newTodo = await Todo.create({ title });
@@ -16,7 +17,7 @@ export async function addTodo(formData: FormData) {
     sessionUser.save();
 
     revalidatePath('/');
-    if (form) form.reset();
+    form.reset();
     
   } catch (err) {
     console.log('Something went wrong:', err);
