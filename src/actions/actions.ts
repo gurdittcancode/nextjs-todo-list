@@ -16,7 +16,8 @@ export async function addTodo(formData: FormData) {
     sessionUser.save();
 
     revalidatePath('/');
-    form.reset();
+    if (form) form.reset();
+    
   } catch (err) {
     console.log('Something went wrong:', err);
   }
