@@ -1,14 +1,14 @@
-'use server';
+"use server";
 
-import { Todo } from '@/models/todo';
-import { User } from '@/models/user';
-import { revalidatePath } from 'next/cache';
+import { Todo } from "@/models/todo";
+import { User } from "@/models/user";
+import { revalidatePath } from "next/cache";
 
 export async function addTodo(formData: FormData) {
   console.log(formData);
-  const title = formData.get('title');
-  const userId = formData.get('user');
-  const form = formData.get('form') as unknown as HTMLFormElement;
+  const title = formData.get("title");
+  const userId = formData.get("user");
+  const form = formData.get("form") as unknown as HTMLFormElement;
 
   try {
     const newTodo = await Todo.create({ title });
@@ -16,36 +16,35 @@ export async function addTodo(formData: FormData) {
     sessionUser.todos.push(newTodo._id);
     sessionUser.save();
 
-    revalidatePath('/');
+    revalidatePath("/");
     form.reset();
-    
   } catch (err) {
-    console.log('Something went wrong:', err);
+    console.log("Something went wrong:", err);
   }
 }
 
 export async function changeStatus(formData: FormData) {
-  const id = formData.get('id');
+  const id = formData.get("id");
 
   try {
     const foundTodo = await Todo.findById(id);
     foundTodo.isCompleted = !foundTodo.isCompleted;
     await foundTodo.save();
 
-    revalidatePath('/');
+    revalidatePath("/");
   } catch (err) {
-    console.error('Failed to update todo:', err);
+    console.error("Failed to update todo:", err);
   }
 }
 
 export async function deleteTodo(formData: FormData) {
-  const id = formData.get('id');
+  const id = formData.get("id");
 
   try {
     await Todo.findByIdAndDelete(id);
 
-    revalidatePath('/');
+    revalidatePath("/");
   } catch (err) {
-    console.error('Error in deleting todo: ', err);
+    console.error("Error in deleting todo: ", err);
   }
 }
